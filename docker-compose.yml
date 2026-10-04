@@ -1,0 +1,60 @@
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: projeto-escola-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: bd-alunos
+      POSTGRES_USER: coti
+      POSTGRES_PASSWORD: coti
+
+    ports:
+      - "5434:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    networks:
+      - projeto-escola-network
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U coti -d bd-alunos"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: projeto-escola-pgadmin
+    restart: unless-stopped
+
+    environment:
+      PGADMIN_DEFAULT_EMAIL: acesso@email.com
+      PGADMIN_DEFAULT_PASSWORD: Acess@2026!
+
+    ports:
+      - "5052:80"
+
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+    networks:
+      - projeto-escola-network
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+
+
+networks:
+  projeto-escola-network:
+    driver: bridge
