@@ -9,7 +9,7 @@ public class Aluno extends Pessoa {
     private String curso;
     private String turma;
     private LocalDate dataMatricula;
-    private Boolean ativo;
+    private Boolean ativo = true;
 
     public String getMatricula() {
         return matricula;

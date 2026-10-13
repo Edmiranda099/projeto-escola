@@ -11,7 +11,7 @@ public class ConnectionFactory {
     public Connection createConnection() throws Exception {
 
         //parâmetros para criação da conexão com o BD
-        var host = "jdb:postgresql://localhost:5434/bd-alunos";
+        var host = "jdbc:postgresql://localhost:5434/bd-alunos";
         var user = "coti";
         var pass = "coti";
 
